@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <mapper namespace="com.project.mapper.BoardMapper">
+  
+  <!-- 게시판 -->
+  
+	<!-- create(공지) -->
+	  	<insert id="boardcreate">
+	  		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+				select max(bno)+1 bno from board
+			</selectKey>
+			
+			<if test="pno != 0">
+				insert into board(btype,bno,title,content,writer,pno) values(#{btype}, #{bno},#{title}, #{content}, #{writer}, #{pno})	
+			</if>
+			
+	  		<if test="pno == 0">
+				insert into board(btype,bno,title,content,writer) values(#{btype}, #{bno},#{title}, #{content}, #{writer})
+			</if>
+	  		
+	  	</insert>
+	  	
+	  	
+	<!-- read -->
+	  	<select id="boardread" resultType="com.project.domain.BoardVO">
+			select
+			     b.*,
+	             p.pname,p.pimgname
+			 from (select * from board where btype = #{btype} ) b
+		         left outer join products p
+		             on b.pno = p.pno
+			where b.bno = #{bno}; 
+	  	</select>
+	  	
+	<!-- update -->
+	  	<update id="boardupdate">
+	  		update board set title = #{title}, content = #{content} where bno = #{bno}
+	  	</update>
+	  	
+	<!-- delete -->
+	  	<delete id="boarddelete">
+	  		delete from board where bno = #{bno}
+	  	</delete>
+	  
+	<!-- list  -->
+	  	
+	  	<!-- 페이징 전 list -->
+	  	<select id="boardlist" resultType="com.project.domain.BoardVO">
+			select
+			  btypelist.*,           
+			  p.pname, p.pimgname
+			from (select * from board where btype = #{btype}) btypelist
+				left outer join products p
+					on p.pno = btypelist.pno
+			
+			<if test="searchType != null">
+			
+				<if test="searchType=='title'.toString()">
+					where title like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='content'.toString()">
+					where content like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='writer'.toString()">
+					where writer like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='tc'.toString()">
+					where title like concat('%',#{keyword},'%')
+					or content like concat('%',#{keyword},'%')
+				</if>
+			</if>
+			
+			order by bno desc
+			
+	  	</select>
+	  	
+	  	<!-- 각 제품 페이지의 게시판 list -->
+	  	<select id="boardlistpno" resultType="com.project.domain.BoardVO">
+	  		select @rownum:=@rownum+1 as rownum, b.*  
+			from (select @rownum:=0) as tmp, board as b  
+			where btype = #{btype} and pno= #{pno}
+			order by bno desc;
+	  	</select>
+	  	
+	  	
+	  	<!-- 검색,페이징 후 list -->
+	  	<select id="boardlistpage" resultType="com.project.domain.BoardVO">
+		<![CDATA[
+			  select * from (
+				select
+				  btypelist.*,           
+				  p.pname, p.pimgname
+				from (
+					select @rownum:=@rownum+1 as rownum, b.* 
+						from (select @rownum:=0) as tmp, board as b
+						where btype = #{btype}
+						order by bno desc) btypelist
+					left outer join products p
+						on p.pno = btypelist.pno  ]]>
+		
+				<if test="searchType != null">
+			
+				<if test="searchType=='title'.toString()">
+					where title like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='content'.toString()">
+					where content like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='writer'.toString()">
+					where writer like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='tc'.toString()">
+					where title like concat('%',#{keyword},'%')
+					or content like concat('%',#{keyword},'%')
+				</if>
+			</if>
+		
+		<![CDATA[
+				
+						) boardlist
+				where rownum > (#{pageNum}-1)*#{amount}
+				and rownum <= #{pageNum} * #{amount};
+		]]>
+	
+		
+		</select>
+		
+	<!-- 총 게시물 수 카운트(검색 적용) -->
+		<select id="totalcount" resultType="int">
+			select count(*) from board where btype = #{btype}
+			
+			<if test="searchType != null">
+			
+				<if test="searchType=='title'.toString()">
+					and title like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='content'.toString()">
+					and content like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='writer'.toString()">
+					and writer like concat('%',#{keyword},'%')
+				</if>
+				
+				<if test="searchType=='tc'.toString()">
+					and title like concat('%',#{keyword},'%')
+					or content like concat('%',#{keyword},'%')
+				</if>
+			</if>
+			
+		</select>
+		
+	<!-- 첨부파일 리스트 -->
+		<select id="attachlist" resultType="com.project.domain.AttachFileDTO">
+	  		select * from attachfile where bno = #{bno}
+	  	</select>
+	  	
+	 <!-- 조회수 증가 -->
+	  	<update id="updateviewcnt">
+	  		update board set viewcnt = viewcnt+1 where bno = ${bno}
+	  	</update>
+  	
+  	<!-- 구매목록 가져오기 -->
+  		 <select id="selectorderlist" resultType="com.project.domain.OrderVO">
+  		 	select
+			     o.orderno,
+				 d.pno, d.reviewchk,
+			     p.pname, p.pimgname
+			 from ordersheet o
+			         inner join orderdetail d
+			             on o.orderno = d.orderno
+			         inner join products p
+			             on d.pno = p.pno
+			     where o.userid = #{userid}
+			     order by o.orderno desc;
+  		 </select>
+  		 
+  	<!-- 리뷰 작성 체크 -->
+  		<update id="reviewchkupdate">
+  			update orderdetail set reviewchk = 'true' where orderno = #{orderno} and pno= #{pno};
+  		</update>	 
+  	
+  	
+  
+  	
+  	
+  
+  </mapper>

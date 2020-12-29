@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.mapper.ProductsMapper">
+  
+  	<!-- 제품 전체 불러오기 -->
+  	<select id="productlistall" resultType="com.project.domain.ProductsVO">
+  		select * from products 
+  		
+  		<if test="keyword != null">
+				where pname like concat('%',#{keyword},'%')
+		</if>
+  		
+  		order by pno desc
+  		
+  	</select>
+  	
+  	<!-- 카테고리별 리스트 불러오기 -->
+  	<select id="productlistcate" resultType="com.project.domain.ProductsVO">
+  		select * from products where pcno = #{pcno} order by pno desc
+  	</select>
+  
+  	<!-- 제품 정보 불러오기 -->
+  	<select id="productview" resultType="com.project.domain.ProductsVO">
+  		select * from products where pno = ${pno}
+  	</select>
+  
+  
+  	<!-- 제품 등록하기 -->
+  	<insert id="register">
+  		insert into products(pcno,pname,pimgname,pprice,pcontent) values (#{pcno},#{pname},#{pimgname},#{pprice}, #{pcontent})
+  	</insert>
+  	
+  	<!-- 제품 수정하기 -->
+  	<update id="update">
+  		update products set pcno = #{pcno}, pname = #{pname}, pimgname = #{pimgname},pprice = #{pprice}, pcontent = #{pcontent} where pno = #{pno}
+  	</update>
+  	
+  	<!-- 제품 삭제하기 -->
+  	<delete id="delete">
+  		delete from products where pno = #{pno}
+  	</delete>
+  	
+  	
+  	<!-- store 목록 가져오기 -->
+  	
+  	<select id="storelist" resultType="com.project.domain.StoreVO">
+  		select * from store order by store_no asc
+  	</select>
+  
+  
+  </mapper>

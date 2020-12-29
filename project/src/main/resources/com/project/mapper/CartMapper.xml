@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.mapper.CartMapper">
+  
+  	<delete id="cleancart">
+  	<![CDATA[
+  		delete from usercart where adddate < CURDATE() - interval 14 day and length(userid) > 14;
+  	]]> 
+  	</delete>
+  
+  	<!-- 카트 추가 -->
+  	<insert id="addcart">	
+  		insert into usercart(userid, pno, cartstock) values (#{userid},#{pno},#{cartstock});
+  	</insert>
+  	
+	 
+  	<!--카트 보기 -->
+  	<select id="viewcart" resultType="com.project.domain.CartVO">
+  	select
+	     row_number() over(order by c.cartno desc) as num,
+	     c.cartno, c.userid, c.pno, c.cartstock, c.adddate,
+	     g.pname, g.pprice, g.pimgname
+	from usercart c
+	     inner join products g
+	         on c.pno = g.pno   
+	     where c.userid = #{userid}
+  	</select>
+  
+  	<!-- 카트에 담겨있는 제품인지 확인 -->
+  	<select id="checkcart" resultType="int">
+  		select count(*) from usercart where pno = #{pno} and userid = #{userid}
+  	</select>
+  	
+  	<!-- 카트 삭제 -->
+  	<delete id="deletecart">
+  		delete from usercart where cartno = #{cartno} and userid = #{userid}
+  	</delete>
+  	
+  	<!-- 상품 갯수 변경 -->
+  	<update id="updatecart">
+  		update usercart set cartstock = #{cartstock} where cartno = #{cartno} and userid = #{userid}
+  	</update>
+  	
+  	<!-- 주문하기 -->
+	 <insert id="placeanorder">
+	  insert into ordersheet(orderno,userid,oname,opostcode,oadd1,oadd2,ocont,totalprice) 
+	  	values (#{orderno},#{userid},#{oname},#{opostcode},#{oadd1},#{oadd2},#{ocont},#{totalprice})
+	 </insert>
+	 
+	 <insert id="orderdetail">
+		 <selectKey keyProperty="orderno" order="BEFORE" resultType="String">
+					SELECT orderno FROM ordersheet order by orderdate desc LIMIT 1
+		</selectKey>
+			 insert into orderdetail(orderno, pno, cartstock)
+		     select  #{orderno}, pno, cartstock
+				from usercart where userid = #{userid}
+  	</insert>
+  	
+  	<!-- 주문 후 카트 비우기 -->
+  	<delete id="ordercartdelete">
+  		delete from usercart where userid = #{userid}
+  	</delete>
+  	
+  	<!-- 주문 목록 불러오기(회원) -->
+  	<select id="viewordersheet" resultType="com.project.domain.OrderVO">
+  		select * from ordersheet 
+  		
+  		<if test="userid != null">
+  		where userid = #{userid} 
+  		</if>
+  		
+  		order by orderdate desc
+  	</select>
+  	
+  	<!-- 주문 상세 정보보기(회원) -->
+  	<select id="vieworderdetail" resultType="com.project.domain.OrderVO">
+  		 select
+		     o.*,
+		     d.detailno, d.pno, d.cartstock,
+		     g.pname, g.pimgname, g.pprice
+		 from ordersheet o
+		         inner join orderdetail d
+		             on o.orderno = d.orderno
+		         inner join products g
+		             on d.pno = g.pno
+		          where o.orderno = #{orderno}
+		     <if test="oname != null">
+				and o.oname = #{oname}
+				and o.ocont = #{ocont}
+			</if>
+		         
+  	
+  	</select>
+  	
+  	<!-- (관리자) 전체 주문 목록 불러오기 -->
+  	<select id="adminvieworderlist" resultType="com.project.domain.OrderVO">
+  		  select
+		     o.*,
+		     d.detailno, d.pno, d.cartstock,
+		     g.pname, g.pimgname, g.pprice
+		 from ordersheet o
+		         inner join orderdetail d
+		             on o.orderno = d.orderno
+		         inner join products g
+		             on d.pno = g.pno
+		order by o.orderdate desc;
+  	
+  	</select>
+  	
+  	
+  	
+  </mapper>

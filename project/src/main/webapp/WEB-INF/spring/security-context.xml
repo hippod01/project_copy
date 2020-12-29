@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id ="CustomAccessDeniedHandler" class="com.project.security.CustomAccessDeniedHandler" />
+<bean id ="userLoginService" class="com.project.security.userLoginService" />
+<!-- 비밀번호 단방향 암호화 -->
+<bean id="pwdEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+<!-- http pattern을 이렇게 별도로 설정하면 해당 패턴에 대해 security filter chain을 거치치 않는다(bypass)  -->
+<security:http pattern="/resources/**" security="none"/>
+<!-- <security:http pattern="/" security="none"/> -->
+<!-- <security:http pattern="/Customlogin" security="none"/> -->
+
+<!-- <security:http auto-config="true" use-expressions="true"  -->
+<security:http pattern="/oauth2/commence" auto-config="true" entry-point-ref="authenticationEntryPoint"  >
+
+	<security:anonymous enabled="false" />
+ 	
+ 	<!-- oauth2 -->
+	<!-- 필터에 의해 인증 예외가 발생하면 인증서버의 로그인 페이지로 redirect되어야 한다. --> 
+	<security:custom-filter ref="oauth2ClientFilter" after="EXCEPTION_TRANSLATION_FILTER" />
+	<!-- 인증서버로 부터 리턴받은 Access Token의 정보를 SecurityContext에 전달하는 필터 -->
+	<security:custom-filter ref="oauth2AuthenticationProcessingFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+	
+	
+	
+</security:http>
+
+<security:http use-expressions="true" authentication-manager-ref="userlogin" >
+	
+	<!-- <security:intercept-url pattern="/**" access="isAuthenticated()" /> -->
+	<!-- <security:anonymous enabled="false" /> -->
+	
+	<!-- 모두 접근 가능 -->
+	 <security:intercept-url pattern="/" access="permitAll" />
+	
+ 	<!-- 회원만 접근 가능 -->
+ 	<security:intercept-url pattern = "/member/info" access ="hasRole('ROLE_MEMBER')"/>
+ 	<security:intercept-url pattern = "/member/modify" access ="hasRole('ROLE_MEMBER')"/>
+ 	<security:intercept-url pattern = "/member/orderlist" access ="hasRole('ROLE_MEMBER')"/>
+ 	<security:intercept-url pattern = "/board/modify" access ="hasRole('ROLE_MEMBER')"/>
+ 	<security:intercept-url pattern = "/board/write" access ="hasRole('ROLE_MEMBER')"/>
+ 	
+ 	<!-- 관리자만 접근 가능 -->
+ 	<security:intercept-url pattern = "/product/register" access ="hasRole('ROLE_ADMIN')"/>
+ 	<security:intercept-url pattern = "/product/modify" access ="hasRole('ROLE_ADMIN')"/>
+ 	<security:intercept-url pattern = "/member/adminpage" access ="hasRole('ROLE_ADMIN')"/>
+	
+	<!-- 로그인 하지 않은 사용자만 접근 가능 -->
+	<security:intercept-url pattern = "/register" access ="isAnonymous()"/>
+	<security:intercept-url pattern = "/Customlogin" access ="isAnonymous()"/> 
+	
+	<!-- 로그인 설정 -->
+	<security:form-login username-parameter="userid" password-parameter="userpw" login-page = "/Customlogin" />
+		
+	<!-- 로그아웃 설정 -->
+	<!-- <security:logout logout-success-url="/Customlogin" delete-cookies="true" invalidate-session="true" /> -->
+	<security:logout delete-cookies="true" invalidate-session="true" success-handler-ref="successLogoutHandler" />
+	
+	
+	<!-- logout-url="/logout" // csrf 사용시 --> 
+	
+	<!-- 자동 로그인 설정 -->
+	<security:remember-me key="TOKEN_KEY" user-service-ref="userLoginService" token-validity-seconds="1209600"
+	data-source-ref="dataSource" remember-me-parameter="remember-me"/>
+	    
+		
+	<!-- 권한이 없을 때 페이지 handler -->
+	<security:access-denied-handler ref= "CustomAccessDeniedHandler"/>
+	
+	<!-- csrf 사용 여부 -->
+	<security:csrf disabled="true"/>
+	
+	
+	
+</security:http>
+
+
+<security:authentication-manager id="userlogin">
+	<!-- db연결 -->
+	 <security:authentication-provider user-service-ref="userLoginService">
+	 		<security:password-encoder hash="bcrypt"/>
+	 </security:authentication-provider>
+</security:authentication-manager>
+
+	
+	<bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+	     <constructor-arg index="0" value="${oauth2.filterCallbackPath}" />
+	</bean> 
+
+
+	<!-- security filter chain에 OAuth2ClientContextFilter 적용 -->
+    <oauth2:client id="oauth2ClientFilter"/>
+
+    <!-- An OAuth2 client filter that can be used to acquire an OAuth2 access token
+         from an authorization server, and load an authentication object into the SecurityContext 
+         : authorization 서버에서 access token을 얻거나 SecurityContext에서 authetication 정보를 얻을 때 사용
+         OAuth2 보호 리소스에 대한 사전 인증 필터입니다. 들어오는 요청에서 OAuth2 토큰을 추출하고, 이를 사용하여 Spring Security 컨텍스트를 OAuth2Authentication으로 채 웁니다.
+         Filter that checks for authorization code, " + "and if there's none, acquires it from authorization server -->        
+    <bean id="oauth2AuthenticationProcessingFilter" class="org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter">
+        <!-- This should match whatever you have configured in the login entry point above -->
+        <constructor-arg name="defaultFilterProcessesUrl" value="${oauth2.filterCallbackPath}"/>
+        <property name="restTemplate" ref="restTemplate"/>
+        <property name="tokenServices" ref="tokenServices"/>
+        <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+    </bean>
+    
+     <oauth2:rest-template id="restTemplate" resource="google"/>
+    
+    <!-- OAuth2ProtectedResourceDetails -->
+    <oauth2:resource
+        id="google"
+		client-id="${oauth2.clientId}"
+		client-secret="${oauth2.clientSecret}"
+		access-token-uri="${oauth2.accessTokenUri}"
+		user-authorization-uri="${oauth2.userAuthorizationUri}"
+		scope="${oauth2.scope}"
+		type="authorization_code"
+		client-authentication-scheme="form"
+	/>
+    
+    <!-- 인증서버로부터 받은 토큰을 검사하고 사용자 정보를 획득 -->
+    <bean id="tokenServices" class="com.project.oauth2.GoogleTokenServices">
+        <property name="checkTokenEndpointUrl" value="${oauth2.tokenInfoUri}"/>
+        <property name="clientId" value="${oauth2.clientId}"/>
+        <property name="clientSecret" value="${oauth2.clientSecret}"/>
+        <property name="accessTokenConverter" ref="accessTokenConverter" />
+    </bean>
+
+    <bean id="accessTokenConverter" class="com.project.oauth2.GoogleAccessTokenConverter">
+        <property name="userTokenConverter">
+            <bean class="com.project.oauth2.DefaultUserAuthenticationConverter"/>
+        </property>
+    </bean>
+    
+   
+    <bean id="successLogoutHandler" class="com.project.oauth2.GoogleSuccessLogoutHandler" />
+
+    <bean id="authenticationSuccessHandler" class="com.project.oauth2.CustomAuthenticationSuccessHandler" />
+
+    
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:globals.properties</value>
+            </list>
+        </property>
+	</bean>
+	
+	
+	<!-- double slash -->
+	<bean id="defaultHttpFirewall" class="org.springframework.security.web.firewall.DefaultHttpFirewall"/>
+	<security:http-firewall ref="defaultHttpFirewall"/>
+	
+
+</beans>

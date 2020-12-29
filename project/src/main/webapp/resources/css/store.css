@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+div#store_wrap{
+	width : 100%;
+	margin : 0 auto;
+}
+
+h3#title{
+	text-align : center;	
+	font-size : 30px;
+	padding : 10px 0;
+	font-weight: 800;
+	letter-spacing: 2px;
+	padding-bottom : 20px;
+}
+
+
+
+div#store_grid{
+	margin : 10px;
+	border : 1px solid black;
+	width : 300px;
+}
+
+div#grid_wrap{
+	display : flex;
+	justify-content: center;
+	/* border : 1px solid red; */
+	
+}
+
+div#store_info{
+	width : 100%;
+	text-align : center;
+	margin : 0 auto;
+}
+
+div#store_grid p{
+	font-size : 14px;
+}
+
+p.store_name{
+	font-size : 18px;
+	background-color: black;
+	color : white;
+	padding : 10px;
+	
+}

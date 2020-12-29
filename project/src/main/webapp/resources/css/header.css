@@ -1,0 +1,351 @@
+/* pc 기본 */
+/* html, body{
+	height : 100%;
+} */ 
+
+
+/* header */
+header {
+	height : 100%;
+	/* border :1px solid black; */
+	width : 100vw;
+	background-color: rgba(255,255,255,0.7);
+	position: fixed;
+	z-index: 999;
+	
+}
+
+/* 각페이지 제목단 (수정해야함) */
+h1{
+	text-align : center;	
+	font-size : 40px;
+	padding : 20px 0;
+	font-weight: 800;
+	letter-spacing: 2px;
+}
+
+div#headcont{
+	width : 80%;
+	display : flex;
+	justify-content: space-between;
+	align-items: center;
+	margin : 0 auto;
+}
+
+span#logo{
+	font-size: 52px;
+	font-weight : 800;
+	line-height: 80px;
+}
+
+nav#usernav ul{
+	display : flex;
+	align-items: center;
+}
+
+nav#usernav li{
+	padding : 0 10px;
+	
+}
+
+nav#usernav a{
+	font-size : 15px;
+	font-weight : 600;
+}
+
+
+/* 검색창 */
+div#search_text_area{
+	width : 100%;
+	display : none;
+	 /* display : flex; */
+	justify-content: center;
+	/* border : 1px solid black; */
+	background-color: rgba(255,255,255,0.7);
+	padding : 20px 0;
+	
+	
+}
+
+input#search_input{
+	width : 300px;
+	border : 0;
+	border-bottom : 1px solid rgb(78,78,78);
+	color : rgb(78,78,78);
+	font-weight : 300;
+	font-size : 24px;
+	text-align : center;
+	background-color: rgba(255,255,255,0.7);
+	padding : 5px;
+	
+}
+
+input#search_input:focus {outline:none;}
+
+input#search_submit{
+	width : 60px;
+	margin-left : 10px;
+	background-color: rgba(255,255,255,0.7);
+	color : rgb(78,78,78);
+	font-size : 18px;
+}
+
+/*모바일 메뉴바 */
+div#mbmenubar{
+	display: none;
+	position: relative;
+	z-index :10;
+}
+
+div#mobdiv{
+	display : none;
+}
+
+
+			/* footer */
+
+footer{
+	/* margin-top : 50px; */
+	height : auto;
+	/* border : 1px solid black; */
+	background-color: black;
+	color :white;
+	font-size : 12px;
+	font-weight: 300;
+	text-align: center;
+}
+
+
+
+div#footercontainer{
+	padding : 20px;
+	display : flex;
+	flex-direction: column;
+	width : 80%;
+	margin : 0 auto;
+	
+	
+}
+
+table#footertable{
+	margin : 20px auto;
+	max-width : 60%;
+	
+	font-weight: 500;
+}
+
+table#footertable td{
+	padding : 0 5px;
+}
+
+address{
+	padding : 10px 0;
+}
+
+div#snsarea{
+	padding-bottom : 20px;
+}
+
+div#snsarea span.fab, div#snsarea span.fas{
+	font-size : 22px;
+	padding : 0 5px;
+}
+
+h4#newsletter{
+	font-weight: 500;
+	font-size : 14px;
+	
+}
+
+input#subscribe{
+	height : 40px;
+	line-height: 40px;
+	background: white;
+	margin : 20px auto;
+	color : black;
+}
+
+
+
+/*  PC (해상도 1024px) */
+@media all and (min-width:1024px) {
+ /* 스타일입력 */
+ 	
+ 	header{
+ 		height : 80px;
+ 		
+ 	}
+ 	
+ 	nav#menunav{
+	position: absolute;
+	right : 50%; 
+	transform : translate(50% , 0);
+	
+	}
+
+	nav#menunav ul{
+		display : flex;
+		/* border :1px solid black; */
+		align-items: center;
+	}
+	
+	nav#menunav li{
+		padding : 0 15px;
+		
+	}
+	
+	nav#menunav a{
+		font-size : 16px;
+		font-weight : 600;
+	}
+	
+	
+	
+	
+	
+} 
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) { 
+/*스타일입력*/
+	header{
+		background-color: #ccc;
+		height: 80px;
+	}
+	
+	div#
+	
+	nav#menunav{
+		position: absolute;
+		right : 50%; 
+		transform : translate(50% , 0);
+		
+	}
+	
+	nav#menunav ul{
+		display : flex;
+		
+		/* border :1px solid black; */
+	}
+	
+	nav#menunav li{
+		padding : 0 10px;
+		
+	}
+	
+	nav#menunav a{
+		font-size : 15px;
+		font-weight : 600;
+	}
+
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) { 
+
+	html{
+		height : 100%;
+		
+	}
+	
+	body{
+		width : 100%;
+		height : 100%;
+		overflow-x :hidden !important;
+		
+		
+	}
+	
+	
+	/*스타일입력*/
+	header{
+		height :80px; 
+		width : 100%;
+		overflow: x-hidden;
+	}
+	
+	div#headcont{
+		height : 100%;
+		width : 80%;
+		
+	}
+	
+	/* pc nav */
+	nav#menunav{
+		display : none;
+	}
+	
+	nav#usernav{
+		display : none;
+	}
+	
+	/* 모바일 메뉴바  */
+	div#mbmenubar{
+		display : block;
+	}
+	
+	div#mbmenubar span{
+		font-size : 30px;
+		position: relative;
+		z-index: 999;
+	}
+	
+	/* 모바일 nav 리스트 */
+	
+	div#mobdiv{
+		display : block;
+		
+	}
+	
+	div#mobdiv nav{
+		height : 100%;
+		display : block;
+		height : 100%;
+		position : fixed;
+		right : -300px;
+		padding-top : 80px;
+		z-index: 999;
+		width : 299px;
+		background-color: black;
+		transition : all 0.5s;
+		
+	}
+	
+	div#mobdiv ul{
+		display : flex;
+		flex-direction: column;
+		align-items: flex-end;
+	
+	}
+	
+	div#mobdiv li{
+		padding : 3px 20px;
+		width : 100%;
+		height : 40px;
+		text-align: right;
+	
+	}
+	
+	div#mobdiv li a{
+		line-height : 40px;
+		font-size : 18px;
+		color : white;
+		letter-spacing: 2px;
+		font-weight: 600;
+		
+	}
+	
+	span.navclose{
+		font-size : 30px;
+		color : white;
+		font-size : 20px;
+	
+	}
+	
+
+
+}
+
+
+
+

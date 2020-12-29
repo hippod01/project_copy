@@ -1,0 +1,981 @@
+@charset "UTF-8";
+
+		/* product/** 부분 css */
+		
+		/* 공통 적용 */
+		
+
+
+div#listcontainer{
+	min-width : 100%;
+	margin : 0 auto;
+}
+
+
+div#topcontainer{
+	display : flex;
+	flex-direction :column;
+	justify-content: center;
+	align-items: center;
+}
+
+h1{
+	text-align : center;	
+	font-size : 50px;
+	padding : 20px 0;
+	font-weight: 800;
+}
+
+div#buttonarea{
+	display : flex;
+	
+}
+
+div#topcontainer a{
+	display : block;
+	width : 150px;
+	height : 40px;
+	color : white;
+	background-color: black;
+	line-height: 40px;
+	text-align : center;
+	font-weight: 600;
+	transition : all 0.5s;
+}
+
+p#viewall:hover{
+	opacity: 0.8;
+}
+
+input[type=text]{
+	background-color: rgb(237,237,237);
+}
+
+/* 버튼 디자인 */
+input[type=submit], input[type=button]{
+	width : 35%;
+	height : 40px;
+	color : white;
+	background-color: black;
+	
+}
+
+input[type=submit]:hover,input[type=button]:hover{
+	opacity: 0.8;
+}
+
+		
+		/* product/viewall 부분 */
+	
+body, html{
+	height : 100%;
+}
+
+/* shop */
+h1.h1text{
+/* 	text-align : center;	
+	font-size : 50px;
+	padding : 20px 0; */
+	
+	text-align : center;	
+	font-size : 30px;
+	padding : 20px 0;
+	font-weight: 800;
+	letter-spacing: 2px;
+}
+
+/* category */
+h3.h3category{
+	padding-bottom: 20px;
+	text-align : center;
+}
+
+h3.h3category a{		
+	font-size : 16px;
+	/* letter-spacing: 2px; */
+	font-weight: 500;
+	padding : 0 10px;
+	color : rgb(78,78,78); 
+	
+}
+
+/* 상품등록하기 */
+div#buttonarea{
+	width :100%;
+	margin : 0 auto;
+	text-align: center;
+	/* border : 1px solid black; */
+}
+
+div#buttonarea input{
+	margin : 0 auto;
+	text-align: center;
+	
+	
+}
+
+/* 그리드 영역 */
+div#viewallcontainer{
+	padding-top : 30px;
+	
+	display : grid;
+	grid-template-rows : repeat(auto-fit,minmax(18%,auto)) ;
+	/* 	grid-template-columns : repeat(auto-fit,minmax(18%,auto)) ; */
+	grid-template-columns : repeat(5, 1fr); ;
+	place-items : center start;
+	column-gap : 20px;
+	row-gap : 50px;
+	
+	width : 80vw;
+	height : 100%;
+	margin : 0 auto;
+	 /* border : 1px solid black;  */
+	justify-content: stretch;
+	padding-bottom : 50px;
+	
+}
+
+
+@media all and (min-width:768px) and (max-width:1023px) { 
+	div#viewallcontainer{
+	grid-template-rows : repeat(auto-fit,minmax(20vh,auto)) ;
+	grid-template-columns : repeat(3, 1fr); ;
+	}
+}
+
+@media all and (max-width:767px) {
+	
+	div#viewallcontainer{
+	grid-template-rows : repeat(auto-fit,minmax(20vh,auto)) ;
+	grid-template-columns : repeat(2, 1fr); ;
+	}
+	
+}
+
+div.griditem{
+	width : 100%;
+	height : 100%;
+}
+
+
+div#product{
+	width :100%;
+	height : 100%;
+	display : flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+div#imgarea{
+	width :100%;
+	height : 100%; 
+	overflow : hidden;
+}
+
+
+div#product img{
+	width : 100%;
+	height : 100%;
+}
+
+
+div#product img:hover{
+	background-color: #ccc;
+	opacity: 0.6;
+	transform:scale(1.05); 
+	transition : all 0.3s;
+}
+
+
+p.pname{
+	padding : 5px 0;
+	font-size : 15px;
+	font-weight: 700;
+	text-align: center;
+	
+}
+
+p.price{
+	padding-bottom : 5px;
+	text-align: center;
+	font-size : 14px;
+	font-weight: 300;
+}
+
+p.viewprice{
+	padding-bottom : 5px;
+	text-align: center;
+	font-size : 18px;
+	font-weight: 400;
+}
+
+p.pcno{
+	padding-top : 10px;
+	font-size : 12px;
+	color : rgb(88,88,88);
+}
+
+
+			/* product/view 부분 */
+			
+/* 모달 창 */
+
+div.modal{
+	position : fixed;
+	z-index : 1000;
+	height:100vh;
+  	width:100vw;
+	letter-spacing: 2px;
+	font-weight: 300;
+	display : none;
+}
+
+div#cartmodal{
+	position : absolute;
+	top : 90px;
+	right : 10%;
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	width : 250px; 
+	height : 100px;
+	flex-direction :column;
+	background-color: rgba(237,237,237,1);
+	padding : 10px;
+	border :1px solid rgb(105,105,105); 
+	
+}
+
+div#cartmodal a{
+	display : block;
+	width : 90%;
+	height : 50%;
+	font-size : 16px;
+	
+	text-align: center;
+	margin : 10px 0;
+	line-height: 50px;
+	background-color: black;
+	color : white;
+	
+}
+			
+div#productviewdiv{
+	max-width : 70%;
+	margin : 0 auto;
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) { 
+div#productviewdiv{
+	min-width : 90%;
+}
+}
+			
+			
+/* 제품 view 영역 테이블 */		
+table#productview, table#productview tr,table#productview td{
+	text-align: center;
+	font-size : 14px;
+	
+}
+
+table#productview{
+	margin : 0 auto;
+	width :100%;
+	
+}
+
+table#productview td{
+	height : 40px;
+	border-bottom : 1px solid #ccc;	
+}
+
+/* 테이블 행 라인 지우기 간격 수정 */
+
+table#productview tr:nth-child(1) td,table#productview tr:nth-child(2) td,table#productview tr:nth-child(3) td{
+	border : 0;
+}
+
+
+table#productview tr:nth-child(1) td{
+	padding : 20px 0;
+}
+
+table#productview tr:nth-child(4) td{
+	padding : 20px 0;
+}
+
+
+/* 상품 이름 부분 */
+p.pviewname{
+	font-size : 40px;
+	font-weight: 800;
+	letter-spacing: 2px;
+}
+
+/* 상품 갯수 부분 */
+div#spandiv{
+	width : 100%;
+	/* border : 1px solid black; */
+	display : flex;
+	justify-content : center;
+	align-items: center;
+}
+
+
+span.spanbox{
+	width : 30px;
+	height : 30px;
+	/* border : 1px solid #ccc; */
+	line-height: 30px;
+	text-align: center;
+	/* margin : 0 auto; */
+}
+
+span.cntbtn{
+	color : #ccc;
+	cursor: pointer;
+	line-height: 30px;
+}
+
+span.btnleft, span.btnright{
+	display : flex;
+	align-items: center; 
+	justify-content: center;
+	
+}
+
+
+/* 장바구니 */
+td#td_cart{
+	/* padding :40px 0; */
+	
+}
+p#p_cart{
+	display : block;
+	width :100%;
+	height : 100%;
+	background-color: black;
+	color : white;
+	line-height: 40px;
+	cursor: pointer;
+	
+}
+
+/* shipping infomation 부분 */
+
+td#td_shipinfo{
+	border : 0;
+}
+
+p#shipinfo_p{
+	
+	font-size: 16px;
+	color : rgb(78,78,78);
+	cursor: pointer;
+	height : 40px;
+	line-height: 40px;
+	padding : 10px 0;
+}
+
+/* 버튼 이벤트 영역 */
+div#div_shipinfo{
+	margin : 0 auto;
+	width : 80%;
+	heihgt : auto;
+	display : none;
+	padding-bottom : 30px ;
+}
+
+div#div_shipinfo h4{
+	font-size : 14px;
+	padding : 10px 0;
+	color : rgb(78,78,78);
+}
+
+div#div_shipinfo p{
+	font-size : 14px;
+	color : rgb(78,78,78);
+	text-align: left;
+}
+
+
+/* 에디터 내용 들어가는 부분 */
+div#contentarea{
+	 margin : 20px auto;
+	 width : 100%;
+	/*  border : 1px solid black; */
+	 padding : 20px 0;
+	 
+}
+
+div#contentareainbox{
+	margin : 0 auto;	
+	width : 100%;
+	padding-bottom : 50px;
+	font-size : 20px;
+	
+}
+
+div#contentareainbox iframe{
+	width : 100%;
+}
+
+@media all and (max-width:767px) {
+	
+	div#contentareainbox iframe{
+		height : 100%;
+	}
+	
+}
+
+
+
+div#contentlogobox{
+	display : flex;
+	justify-content: center;
+}
+
+/* list,write 버튼 div */
+div.boardbtnarea{
+	display : flex;
+	justify-content: flex-end;
+	margin : 20px;
+}
+
+/* list,write 버튼 input */
+div.boardbtnarea input{
+	margin : 0 5px;
+	height : 30px;
+	width : 60px;
+	background-color: rgb(237,237,237);
+	border : 1px solid #ccc;
+	color : rgb(78,78,78);
+	font-size : 12px;
+}
+
+
+	/* 하단(리뷰, qna) 게시판 전역*/
+div.boardarea{
+	width : 100%;
+	margin : 100px auto;
+	/* border : 1px solid black; */
+	text-align: center;
+	height : auto;
+	
+}
+
+/* 문의 리뷰 title */
+h3.boardname{
+	font-size : 20px;
+	padding : 20px 0;
+}
+
+
+/* 하단 게시판 테이블 행 높이 */
+table#review td, table#qanda td{
+	height : 40px;
+	font-size :12px;
+}
+
+/* 게시판 제목 부분(클릭 이벤트) tr */
+tr.contenttr{
+	display : none;
+}
+
+td#contenttd{
+	padding : 20px 0;
+}
+
+
+/* 댓글 영역 */
+div.replayarea{
+	margin-top : 20px;
+}
+
+/* 댓글 리스트 */
+div.replylist{
+	width :90%;
+	margin :3px auto;
+	height : auto;
+	text-align: left;
+	padding :10px;
+	border : 1px solid #ccc;
+}
+
+div.replylist p{
+	width :100%;
+	height :20px;
+	line-height: 20px;
+	font-weight: 300;
+	
+}
+
+p.replytext{
+	display : flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+p.replytext span{
+	display : block;
+}
+
+/* 수정 삭제 댓글 쓰기 버튼 */
+input.updatesubmitbtn, input.deletebtn, input.modifybtn, input.writesubmitbtn, input#adminmodify, input#admindelete, input.registerbtn{
+	margin : 0 1px;
+	height : 25px;
+	width : 50px;
+	background-color: rgb(237,237,237);
+	border : 1px solid #ccc;
+	color : rgb(78,78,78);
+	font-size : 12px;
+	
+}
+
+/* 댓글 작성 영역 */
+div#replywrite{
+	width : 90%;
+	margin : 3px auto;
+	border : 1px solid #ccc; 
+	height :30px;
+	display : flex;
+	justify-content: center;
+	align-items: center;
+	padding :5px 10px;
+}
+
+div#replywrite input[type=text]{
+	border : 1px solid #ccc;
+	height : 100%;
+	margin : 0 5px;
+	text-align: center;
+	font-size :12px;
+}
+
+input.replyer{
+	width :10%;
+	color : rgb(155,155,155);
+}
+
+input.replytext{
+	width : 50%;
+}
+
+input.writesubmitbtn{
+	width : 60px;
+	height : 100%;
+	font-size : 12px;
+}
+
+
+/* 리뷰 테이블 */
+div.review table{
+	width :100%;
+	height : 100%;
+}
+
+/* 리뷰 테이블 열간격 */		
+table#review tr td:nth-child(1){
+	width : 10%;
+}
+
+table#review tr td:nth-child(2){
+	width : 40%;
+}
+
+table#review tr td:nth-child(3){
+	width : 10%;
+}
+
+table#review tr td:nth-child(4){
+	width : 10%;
+}
+
+table#review tr td:nth-child(5){
+	width : 10%;
+}
+
+span#title:hover{
+	opacity : 0.6;
+	cursor: pointer;
+	
+}
+
+/* review 테이블 테두리 */
+table#review td{
+	border-bottom : 1px solid #ccc;
+}
+
+table#review tr:nth-last-child(1) td{
+	border : 0;
+}
+ 
+/* qanda 부분 */
+div.qanda table{
+	width :100%;
+	height : 100%;
+}
+
+/* 문의 테이블 열간격 */		
+table#qanda tr td:nth-child(1){
+	width : 10%;
+}
+
+table#qanda tr td:nth-child(2){
+	width : 40%;
+}
+
+table#qanda tr td:nth-child(3){
+	width : 10%;
+}
+
+table#qanda tr td:nth-child(4){
+	width : 10%;
+}
+
+table#qanda tr td:nth-child(5){
+	width : 10%;
+}
+
+/* qanda 테이블 테두리 */
+table#qanda td{
+	border-bottom : 1px solid #ccc;
+}
+
+table#qanda tr:nth-last-child(1) td{
+	border : 0;
+}
+
+
+
+
+ 
+		/* pruduct/modify 부분 */
+		
+table#productmodify, table#productmodify tr,table#productmodify td{
+	font-size : 14px;
+	font-weight: 300;
+	border: 0;
+	border-collapse: collapse;
+}
+
+table#productmodify{
+	margin : 0 auto;
+	width : 100%;
+}
+
+table#productmodify td{
+	height : 40px;
+	border-bottom : 1px solid #ccc;
+	padding : 5px 20px;
+	
+}
+
+table#productmodify input[type=text]{
+	background-color: rgb(237,237,237);
+	padding: 5px 10px;
+	border : 1px solid rgb(78,78,78);
+	margin-top : 5px;
+}
+
+
+table#productmodify tr td:nth-child(1){
+	text-align: right;
+}
+
+
+		/* product/register 부분 */
+		
+h3#registertitle{
+	text-align: center;
+	font-size : 30px;
+	letter-spacing: 2px;
+	padding-bottom: 20px;
+	
+}
+		
+table#productregister,table#productregister tr,table#productregister td{
+	font-size : 14px;
+	font-weight: 300;
+	border: 0;
+	border-collapse: collapse;
+}
+
+table#productregister{
+	margin : 0 auto;
+	min-width : 100%;
+}
+
+table#productregister td{
+	height : 40px;
+	border-bottom : 1px solid #ccc;
+	padding : 5px 20px;
+}
+
+table#productregister input[type=text]{
+	background-color: rgb(237,237,237);
+	padding: 5px 10px;
+	border : 1px solid rgb(78,78,78);
+	margin-top : 5px;
+}
+
+select#pcnoselect{
+	background-color: rgb(237,237,237);
+	width : 170px;
+	height : 30px;
+	border : 1px solid rgb(78,78,78);
+	margin : 5px 0;
+}
+
+table#productregister tr td:nth-child(1){
+	text-align: right;
+}
+
+
+
+		
+/* 에디터 크기 설정 부분 */
+div#editorarea{
+	margin : 0 auto;
+	display : block;
+	width : 100%;
+	height : auto;
+	padding : 20px 0 ;
+}
+
+
+
+div#submitarea{
+	width : 60%;
+	display : flex;
+	justify-content: center;
+	margin : 20px auto;
+}
+
+div#submitarea input[type=submit]{
+	margin : 0 10px;
+	/* border: 1px solid red; */
+}
+
+
+		/* product/cart 부분 */
+		
+h3#cart{
+	text-align : center;	
+	font-size : 30px;
+	padding : 20px 0;
+	font-weight: 800;
+	letter-spacing: 2px;
+
+}
+
+span.cartdelete{
+	color : black;
+	cursor: pointer;
+}
+
+span#freeship{
+	font-size : 12px;
+	color : grey;
+}
+
+/* 테이블 */
+table.carttable{
+	/* border :1px solid black; */
+	min-width : 65%;
+	text-align: center;
+	
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+	table.carttable{
+		max-width : 80%;
+	}
+}
+
+
+/* 장바구니 있을 때*/
+table.issettable{
+	margin : 10px auto;
+}
+
+/* 장바구니 없을 때*/
+table.emptytable{
+	height : 300px;
+	margin : 0 auto;
+	border :1px solid #ccc;
+}
+
+
+
+/* 상품 갯수 부분 */
+table.carttable span.spanbox{
+	
+	width : 30px;
+	height : 30px;
+	/* border : 1px solid #ccc; */
+	line-height: 30px;
+	/* margin : 0 auto; */
+}
+
+table.carttable span.cntbtn{
+	/*  background-color: black; */
+	color : #ccc;
+	cursor: pointer;
+	line-height: 30px;
+}
+
+table.carttable span.btnleft, table.carttable span.btnright{
+	display : flex;
+	align-items: center; 
+	
+}
+
+/* 장바구니 있을 때 */
+
+table.issettable, table.issettable tr, table.issettable td{
+	border-top : 1px solid #ccc;
+	border-bottom : 1px solid #ccc;
+	 border-collapse: collapse;
+	font-size : 14px;
+	font-weight : 300;
+	
+}
+
+table.issettable img{
+	display : block;
+	margin : 0 auto;
+}
+
+/* 열간격 */
+table.issettable td{
+	height : 45px;
+	padding : 5px 0;
+}
+
+table.issettable tr td:nth-child(1) {
+	width : 15%;
+}
+
+table.issettable tr td:nth-child(2) {
+	width : 35%;
+}
+
+table.issettable tr td:nth-child(3) {
+	width : 20%;
+}
+
+table.issettable tr td:nth-child(4) {
+	width : 25%;
+}
+
+/* 가격계산 테이블 */
+table#pricetable{
+	text-align : left;
+	font-size :14px;
+	margin : 20px auto;
+	border-collapse: collapse;
+}
+
+table#pricetable, table#pricetable tr, table#pricetable td{
+	border-top : 1px solid #ccc;
+	border-bottom : 1px solid #ccc;
+	font-weight : 300;
+}
+
+table#pricetable td{
+	height : 30px;
+	padding : 5px 0;
+}
+
+div#submitarea{
+	margin : 30px auto;
+	max-width :60%;
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+	
+	div#submitarea{
+		min-width :90%;
+	}
+}
+
+
+		/* product/order, orderdetail */
+
+table#usershipinfo{
+	text-align: center;
+	margin : 20px auto;
+	font-size : 14px;
+	font-weight : 300;
+	border-collapse: collapse;
+
+}
+
+
+h4.title{
+	text-align: center;
+	padding : 10px;
+	font-weight: 500;
+}
+
+h4.orderdate{
+	/* border : 1px solid black; */
+	width :400;
+	display : block;
+	width : 80%;
+	text-align: center;
+	margin : 0 auto;
+	letter-spacing: 0px;
+	color : rgb(78,78,78);
+	
+}
+
+table#usershipinfo td{
+	height : 50px;
+	border-bottom : 1px solid #ccc;
+	border-top : 1px solid #ccc;
+	padding : 5px;
+}
+
+table#usershipinfo tr td:nth-child(1) {
+	width : 30%;
+}
+
+table#usershipinfo tr td:nth-child(2) {
+	width : 70%;
+	text-align: left;
+}
+
+table#usershipinfo input[type=text]{
+	width : 90%;
+	background-color: rgb(237,237,237);
+	padding : 5px 0;
+	border : 1px solid #ccc;
+	height : 30px;
+	text-indent: 15px;
+	
+}
+
+td#addarea input{
+	margin : 3px 0;
+}
+
+td#addarea input#postcode, td#addarea input#pcsearch{
+	width : 45%;
+}
+
+div#postcode{
+	width : 100%;	
+	display : flex;
+}
+
+
+
+
+

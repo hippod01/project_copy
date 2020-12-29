@@ -1,0 +1,273 @@
+
+/* 메인 이미지 좌우 슬라이드  */
+div#indexwrap{
+	width : 100%;
+	height : auto;
+	position: relative;
+	top : 80px;
+	margin : 0 auto;
+	background-color: rgb(237,237,237);
+	margin-bottom : 80px; 
+}
+
+div#mainimg {
+	height : 600px;
+	overflow : hidden;
+}
+
+div#mainimg ul{
+	display : flex;
+	width : 300%;
+}
+
+div#mainimg li{
+	position : relative;
+	right : 0;
+	transition : all 0.5s;	
+	width : 100%;
+	
+}
+
+
+div#img1{
+ 	background-image: url(../image/mainimg1.png);
+ 	
+}
+div#img2{
+ 	background-image: url(../image/mainimg2.png);
+ 	
+}
+div#img3{
+ 	background-image: url(../image/mainimg3.png);
+ 	
+}
+
+div.backgroundimg{
+	width : 100%;
+	height : 600px;
+	background-size: cover; 
+	background-repeat: no-repeat;
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) { 
+	div.backgroundimg{
+	width : 100%;
+	height : 600px;
+	background-size: cover; 
+	background-repeat: no-repeat;
+	background-position: center;
+}
+	
+}
+
+/* 상하 버튼 */
+div.btn{
+	width : 50px;
+	height : 50px;
+	position : absolute;
+	z-index : 500;
+	cursor: pointer;
+	
+}
+
+div.leftbtn{
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	top : 250px;
+}
+
+div.rightbtn{
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	top : 250px;
+	right : 0;
+}
+
+
+
+/* 메인 컨텐츠 내용 div */
+div#contwrap{
+	width : 100%;
+	margin : 0 auto;
+	/* border : 1px solid black; */
+}
+
+div.divsection{
+	width : 100%;
+	margin : 0 auto;
+	text-align: center;
+	padding : 50px 0;
+	
+}
+
+div.divsection h3{
+	padding-bottom : 20px;
+	font-size : 24px;
+}
+
+div#div_shop{
+	background-color: rgb(221,221,221);
+}
+
+
+/* 그리드 영역 */
+div#viewallcontainer{
+	padding-top : 30px;
+	
+	display : grid;
+	grid-template-rows : repeat(auto-fit,minmax(18%,auto)) ;
+	/* 	grid-template-columns : repeat(auto-fit,minmax(18%,auto)) ; */
+	grid-template-columns : repeat(5, 1fr); ;
+	place-items : center start;
+	column-gap : 20px;
+	row-gap : 50px;
+	
+	width : 80vw;
+	height : 100%;
+	margin : 0 auto;
+	 /* border : 1px solid black;  */
+	justify-content: stretch;
+	padding-bottom : 50px;
+	
+}
+
+
+@media all and (min-width:768px) and (max-width:1023px) { 
+	div#viewallcontainer{
+	grid-template-rows : repeat(auto-fit,minmax(auto,100%)) ;
+	grid-template-columns : repeat(3, 1fr);
+	}
+}
+
+@media all and (max-width:767px) {
+	
+	div#viewallcontainer{
+	grid-template-rows : repeat(auto-fit,minmax(auto,100%)) ;
+	grid-template-columns : repeat(2, 1fr); ;
+	}
+	
+}
+
+div.griditem{
+	width : 100%;
+	height : 100%;
+	/* border : 1px solid blue;  */
+	
+}
+
+
+div#product{
+	/* border :1px solid red; */
+	width :100%;
+	height : 100%;
+	display : flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
+}
+
+div#imgarea{
+	width :100%;
+	height : 100%; 
+	overflow : hidden;
+	/* border : 1px solid red; */
+}
+
+
+div#product img{
+	width : 100%;
+	height : 100%;
+}
+
+
+div#product img:hover{
+	background-color: #ccc;
+	opacity: 0.6;
+	transform:scale(1.05); 
+	transition : all 0.3s;
+}
+
+
+p.pname{
+	padding : 5px 0;
+	font-size : 15px;
+	font-weight: 700;
+	text-align: center;
+	
+}
+
+p.price{
+	padding-bottom : 5px;
+	text-align: center;
+	font-size : 14px;
+	font-weight: 300;
+}
+
+
+/* 공지사항 상하 슬라이드 */
+div#div_notice{
+	width : 100%;
+	height : 100%;
+	
+}
+div#div_notice p{
+	display : flex;
+	align-items : center;
+	width : 100%;
+	height : 100%;
+	
+	
+}
+
+div#div_notice ul{
+	width : 80%;
+	display : flex;
+	flex-direction: column;
+	overflow: hidden;
+	height : 100px;
+	border-top : 1px solid rgb(180,180,180);
+	border-bottom : 1px solid rgb(180,180,180);
+	margin : 0 auto;
+	
+	
+}
+
+div#div_notice li{
+	margin : 0 auto;
+	height : 100px;
+	width : 90%;
+	position : relative;
+	top : 0;
+	transition : all 0.3s;
+}
+
+div#div_notice table{
+	height : 100%;
+	font-size : 18px;
+	letter-spacing : -2px;
+	width : 100%;
+	font-weight: 500;
+	
+}
+
+div#div_notice table td{
+/* 	border : 1px solid black; */
+}
+
+p#regdate{
+	color : rgb(153,153,153);
+}
+
+p#morenotice{
+	color : rgb(78,78,78);
+}
+
+p#noticetitle:hover{
+	color : rgb(78,78,78);
+	
+}
+

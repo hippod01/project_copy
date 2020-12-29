@@ -1,0 +1,473 @@
+/* *{
+	color : rgb(80,80,80);
+} */
+
+	/* member/** 부분, login,register css */
+	
+	/* 공통 */
+
+table, tr, td{
+   /* border:1px solid #000000; */
+   border-collapse: collapse;
+   text-align: center;   
+    
+}
+
+div#container{
+	max-width : 400px;
+	/* max-width : 100%; */
+	margin : 0 auto;
+	height : 100%;
+	padding-bottom : 50px;
+}
+
+table#register, table#login, table#memberinfo, table#memmodify{
+	width : 100%;
+	height : auto;
+	margin : 0 auto;
+}
+
+td {
+	padding : 0 10px;
+	height : 40px;
+}
+
+aside{
+	display : block;
+	text-align: center;
+	margin : 0 auto;
+}
+
+aside a{
+	color : rgb(102,102,102);
+	padding : 0 10px;
+	/* letter-spacing: -1px; */
+	font-size : 14px;
+}
+
+
+/* 페이지 이름 (mypage,login,join..)*/
+
+h3{
+	text-align : center;	
+	font-size : 30px;
+	padding : 20px 0;
+	font-weight: 800;
+	letter-spacing: 2px;
+}
+
+/* 각 항목(id,pw..) */
+p{
+	font-size : 12px;
+	text-align: left;
+	font-weight: 400;
+	
+}
+
+
+/* input text,password 부분 */	
+
+input[type=text],input[type=password]{
+	width : 100%;
+	height : 40px;
+	border : 1px solid #ccc;
+	background-color: rgb(237,237,237);
+	text-indent: 10px;
+}
+
+
+/* input button submit 부분 */
+input[type=submit]{
+	width : 50%;
+	height : 40px;
+	color : white;
+	background-color: black;
+	margin : 2px 0; 
+}
+
+input[type=button]{
+	width : 50%;
+	height : 40px;
+	color : white;
+	background-color: black;
+	margin : 2px 0; 
+}
+
+input[type=submit]:hover,input[type=button]:hover{
+	opacity: 0.8; 
+}
+	
+	
+		/* 회원가입 화면 */
+
+
+
+/* 유효성 검사 부분 */
+
+div#idmsg,div#pwmsg,div#repwmsg{
+	padding : 5px;
+	width : 100%;
+	margin : 0 auto;
+}
+/* 통과 */
+p.checkno{
+	font-weight : 400;
+	color : red;
+	font-size : 12px;
+}
+
+/* 비통과 */
+p.checkok{
+	font-weight : 400;
+	color : green;
+	font-size : 12px;
+}
+
+/* 주소 부분 */
+input#postcode, input#pcsearch{
+	width : 49%;
+	
+}
+/* 주소 자동 입력되는 부분 글자색 변경 */
+input#postcode, input#address{
+	color : rgb(80,80,80);
+}
+
+
+/* 주소 부분 인풋창 세로 간격*/
+td#addarea input{
+	margin : 3px 0;
+
+} 
+
+/* 필수 항목(*) 글자 디자인 */
+span.nec{
+	font-size : 18px;
+	color : red;
+}
+
+/* 가입하기 버튼 행 높이 */
+table#register tr:nth-last-child(1) td {
+	padding : 30px 10px;
+}
+
+
+		/* 로그인 화면 */
+
+		
+/* 로그인 회원가입 버튼 50% */
+table#login input[type=submit],table#login input[type=button]{
+	width : 49.2%;
+	
+} 
+
+td#remem_search{
+	text-align: left;
+	display : flex;
+	justify-content: space-between;
+	align-items: center;
+	
+}
+
+/* 아이디 비밀번호 찾기 */
+p#idpwsearch{
+	padding : 10px 0;
+	text-align: center;
+	
+}
+
+p#idpwsearch:hover, p#orderinfo:hover{
+	text-decoration: underline;
+}
+
+p#rememberme{
+	display : inline-block;
+	font-size : 12px;
+	line-height: 12px;
+	text-align: left;
+}
+
+
+
+
+		/* memberinfo */
+
+
+/* 회원정보 값 부분 */	
+p.meminfobox{
+	font-size : 12px;
+	text-indent : 10px;
+	display : flex;
+	align-items : center;
+	border : 1px solid #ccc;
+	height : 100%;	
+	color : rgb(80,80,80);
+}
+
+
+/* 수정하기 버튼 높이 */
+table#memberinfo tr:nth-last-child(1) td{
+	padding : 40px 10px;
+	display :flex;
+	
+	
+}
+
+table#memberinfo input[type=submit], table#memberinfo input[type=button]{
+	width : 49%;
+	margin : 0 2px;
+	
+}
+
+		/* member modify */
+
+
+/* 버튼 너비 조절 */
+table#memmodify input[type=submit]{
+	width : 49%;
+	
+} 
+
+/* 버튼 행 높이 */
+table#memmodify tr:nth-last-child(1) td {
+	/* border : 1px solid black; */ 
+	padding : 40px 10px;
+	
+}
+	
+
+
+		/* member/orderlist */
+		
+div#orderlistcontainer{
+	max-width : 500px;
+	margin : 0 auto;
+	padding : 10px;
+	min-height : 50vh;
+	
+}
+
+/* 목록 없을 때 */
+table#orderlistnull{
+	width : 100%;
+	height : 40vh;
+	margin : 10px 0;
+	padding : 20px;
+	/* border : 1px solid rgb(37,37,37); */
+	color : rgb(37,37,37); 
+	
+}
+
+table#orderlistnull td{
+	padding : 20px 0;
+}
+
+
+/* 목록 있을 때 */
+table#orderlistnotnull{
+	width :100%;
+	margin : 10px 0;
+	/* border : 1px solid #ccc; */
+	font-size :14px;
+	border-collapse: collapse;
+}
+
+div#eachtable{
+	border : 1px solid #ccc;
+	padding : 5px;
+	margin : 10px auto;
+}
+
+table#orderlistnotnull td{
+	height : 35px;
+	
+}
+
+
+div#eachtable:hover{
+	background-color : rgba(255,255,255,0.4);
+	/* opacity: 0.7; */
+}
+
+table#orderlistnotnull tr td:nth-child(1) {
+	width : 30%;
+	
+}
+
+table#orderlistnotnull tr td:nth-child(2) {
+	width : 70%;
+}
+
+
+		/* 비밀번호 찾기 모달창 */
+
+div.modal{
+	position : fixed;
+	z-index : 1000;
+	height:100vh;
+  	width:100vw;
+	background-color: rgba(0,0,0,0.5);
+	display : none;
+	
+}
+
+div#findpw, div#findorder{
+	position : relative;
+	top : 50%;
+	left : 50%;
+	transform : translate(-50%, -50%);
+	display : none;
+	justify-content : center;
+	align-items : center;
+	max-width : 500px; 
+	min-height : 500px;
+	flex-direction :column;
+	background-color: rgba(237,237,237,1);
+	padding : 10px;
+}
+
+
+
+div#findpwcont, div#findordercont{
+	width : 70%;
+}
+
+div.modal p{
+	padding : 3px 0;
+}
+
+div.modal h2{
+	font-size : 28px;
+	font-weight: 600;
+	padding : 10px 0;
+}
+
+div.modal input[type=text]{
+	margin-bottom : 5px;
+}
+
+div.modal input[type=button]{
+	margin-top : 20px;
+}
+
+
+div.loading{
+	position : fixed;
+	z-index : 1002;
+	height:100vh;
+  	width:100vw;
+  	display : none;
+	
+}
+
+div#loadimgbox{
+	position : relative;
+	top : 50%;
+	left : 50%;
+	transform : translate(-50%, -50%);
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
+
+
+		/* member/adminpage 관리자 페이지 영역 */
+	
+div#adminpagecontainer{
+	width :  80%;
+	margin : 20px auto;
+	padding : 10px;
+}		
+
+div#admincontent{
+	margin : 0 auto;
+}
+
+
+table.admintable tr:nth-last-child(1) {
+	border-bottom : 0;
+}
+
+table.admintable tr td{
+	padding : 10px 0;
+}
+
+table.admintable tr{
+	border-bottom : 1px solid #ccc;
+}
+
+table.admintable tr:nth-child(1) {
+	font-weight: 400;
+}
+
+		
+table.admintable{
+	width : 95%;
+	height : auto;
+	margin : 0 auto;
+	padding : 10px;
+	font-size : 12px;
+	font-weight: 300;
+	border : 0;
+}
+
+
+tr#table_tr_each:hover{
+	background-color: rgba(255,255,255,0.8);
+	transition : all 0.3s;
+}		
+
+a.adminbtn{
+	font-size : 12px;
+	font-weight: 300;
+	display : blcok;
+	background-color : black;
+	color : white;
+	padding : 7px;
+	width : 40px;
+	height : 30px;
+}
+
+
+/* 등록 버튼 div */
+div#writebtndiv{
+	width : 95%;
+	padding : 0 10px;
+	text-align: right;
+}
+
+
+input.adminbtn_submit{
+	font-size : 12px;
+	font-weight: 300;
+	width : 40px;
+	height : 30px;
+}
+
+
+/* 게시물 관리 - 연결상품 영역 */
+div#pnoitems{
+	display : flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+div#pnoitems:hover{
+	text-decoration: underline;
+}
+
+aside#boardmenu a{
+	display : inline-block;
+	width : 60px;
+	height : 35px;
+	line-height: 35px;
+	background-color: rgb(78,78,78);
+	color : white;
+	font-weight: 300;
+	font-size : 13px;
+	border-radius:  20px 20px 0 0;
+}
+
+
