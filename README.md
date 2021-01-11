@@ -45,4 +45,5 @@
 ### 6. 장바구니 카카오 PAY 결제
 <img src="https://user-images.githubusercontent.com/69491529/103151190-38ab2d00-47bf-11eb-9bfa-20cf0a062b67.gif" alt="" />
 
-
+### 7. 실시간 쪽지 수신 배지 알림 [websocket]
+<img src="https://user-images.githubusercontent.com/69491529/104156529-9630b200-542c-11eb-80ca-853cff29527e.gif" alt="" />
