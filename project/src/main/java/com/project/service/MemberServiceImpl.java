@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.domain.MemberVO;
-import com.project.interceptor.LoginPostInterceptor;
 import com.project.mapper.MemberMapper;
 
 @Service

@@ -7,17 +7,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<!-- js -->
+<script src="../resources/js/jquery-3.5.1.js" type="text/javascript"></script>
+<script src="../resources/js/msgView.js" type="text/javascript"></script>
+<!-- css -->
 <link rel="stylesheet" href="../resources/css/default.css" />
 <link rel="stylesheet" href="../resources/css/member.css" />
-
-
 </head>
 <body>
 
 <!-- header -->
 <jsp:include page="../header.jsp"></jsp:include>
+
+<!-- 쪽지 모달 -->
+<div class="modal">
+	<!-- 비밀번호 찾기 -->
+	<div id="viewMsg">
+		<div id="viewMsgCont">
+			
+			<c:forEach items="${msglist}" var="mlist">
+				
+				<div id="msglist" data-msgno ="${mlist.message_no}" data-msgchk="${mlist.msg_check}">
+				<!-- <span>보낸이 ${mlist.send_id }</span> | -->
+					<p><span>${mlist.send_date }</span></p>
+					<p>${mlist.content }<c:if test="${mlist.msg_check == 'NO'}"> <span style="text-align : right; color : green;">●</span></c:if></p>
+					
+				</div>
+			</c:forEach>
+		</div>
+	</div>
+</div>
 
 
 <section>
@@ -39,6 +58,8 @@
 		<sec:authorize access="hasRole('ROLE_ADMIN')" var="hasRoleAdmin">
 		<a href="/db/member/adminpage?type=member">관리자</a>
 		</sec:authorize>
+		<!-- <a href="#">쪽지 <i class="far fa-envelope"></i> (<span id="MsgIcon"></span>)</a> -->
+		<p id="msgViewLink" style="font-size : 14px; ">쪽지 <i class="far fa-envelope"></i> (<span id="MsgIcon"></span>)</p>
 	</aside>
 	
 	<table id="memberinfo">

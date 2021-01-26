@@ -14,13 +14,30 @@
 <link rel="stylesheet" href="../resources/css/member.css" />
 <!-- js -->
 <script src="../resources/js/jquery-3.5.1.js" type="text/javascript"></script>
-<script src="../resources/js/admin.js" type="text/javascript"></script>
+<script src="../resources/js/msgView.js" type="text/javascript"></script>
+
+
 </head>
 
 <body>
 
 <!-- header -->
 <jsp:include page="../header.jsp"></jsp:include>
+
+<!-- 쪽지 모달 -->
+<div class="modal">
+	<!-- 비밀번호 찾기 -->
+	<div id="viewMsg" style="padding : 10px;">
+		<h4>쪽지 보내기</h4>
+		<div id="viewMsgCont">
+			<span>ID</span> <input type="text" id="receive_id" placeholder="receive_id" disabled="disabled" />
+
+			<input type="text" id="msgCnt" placeholder="내용 입력" />
+			<input type="button" id="msgSend" value="보내기" />
+		</div>
+	</div>
+</div>
+
 
 <section>
 
@@ -66,13 +83,13 @@
 		<c:forEach items="${memberlist}" var="mlist">
 			<tr id="table_tr_each">
 				<%-- <td><input type="checkbox" class="chkbox" data-chkvalue="${mlist.userid }"></td> --%>
-				<td>${mlist.userid }</td>
-				<td>${mlist.username }</td>
-				<td>${mlist.useremail }</td>
-				<td>${mlist.usercont }</td>
-				<td>${mlist.userpc }</td>
-				<td>${mlist.useradd }</td>
-				<td>${mlist.regdate }</td>
+				<td>${mlist.userid}<span class="far fa-envelope"></span></td>
+				<td>${mlist.username}</td>
+				<td>${mlist.useremail}</td>
+				<td>${mlist.usercont}</td>
+				<td>${mlist.userpc}</td>
+				<td>${mlist.useradd}</td>
+				<td>${mlist.regdate}</td>
 				<td>
 					<a class="adminbtn" href="#">수정</a>
 				    <a class="adminbtn" href="#">탈퇴</a>

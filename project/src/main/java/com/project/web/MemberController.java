@@ -16,19 +16,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.domain.BoardVO;
 import com.project.domain.Criteria;
 import com.project.domain.MemberVO;
+import com.project.domain.MessageVO;
 import com.project.domain.OrderVO;
 import com.project.security.UserDetailsVO;
 import com.project.service.BoardService;
 import com.project.service.CartService;
 import com.project.service.MemberService;
 import com.project.service.ProductsService;
+import com.project.service.messageService;
 
 @Controller
 @RequestMapping("member")
@@ -42,6 +46,8 @@ public class MemberController {
 	private ProductsService proservice;
 	@Autowired
 	private BoardService boardservice;
+	@Autowired
+	private messageService msgservice;
 	@Autowired
 	BCryptPasswordEncoder pwencoder;
 	
@@ -60,6 +66,8 @@ public class MemberController {
 			member.setUserid(principal.getName());
 			model.addAttribute("meminfo",member);
 		}
+		model.addAttribute("msglist", msgservice.msgListget(principal.getName()));
+		
 	}
 	
 //	회원정보 수정 화면
@@ -167,12 +175,29 @@ public class MemberController {
 //	회원 정보 목록 화면
 	@RequestMapping(value="adminmember", method = RequestMethod.GET)
 	public void adminmemberlistget(Model model) throws Exception{
-		logger.info("관리자 페이지 - 회원 목록");
 		model.addAttribute("memberlist", service.adminmemberlist());
 		
 	}
+
 	
+//	쪽지
+
+	//메세지 읽음 처리
+	@ResponseBody
+	@RequestMapping(value="updatemsg", method = RequestMethod.POST)
+	public void updateMsg(Model model,int message_no) throws Exception{
+		msgservice.updateMsg(message_no);
+		
+	}
 	
+	//메세지 작성
+	@ResponseBody
+	@RequestMapping(value="msgsend", method = RequestMethod.POST)
+	public void msgsend(Model model,MessageVO msg) throws Exception{
+		msg.setSend_id("admin");
+		msgservice.writeMsg(msg);
+		
+	}
 	
 	
 	

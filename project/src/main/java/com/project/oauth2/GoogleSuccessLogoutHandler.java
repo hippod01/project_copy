@@ -37,7 +37,7 @@ public class GoogleSuccessLogoutHandler extends SimpleUrlLogoutSuccessHandler {
 			throws IOException, ServletException {
 		
 //		oauth2 로그인 했다면
-		
+		logger.info(""+authentication.getName().contains("@"));
 		if(authentication.getName().contains("@")){
 			//토큰 폐기
 			String accessToken = ((OAuth2AuthenticationDetails)authentication.getDetails()).getTokenValue();

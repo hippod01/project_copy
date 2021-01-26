@@ -62,20 +62,25 @@ $(document).ready(function(){
     // 회원 인증 되었을 때 메일 보내는 함수
     function sendemail(){
         $.ajax({
-                url : "/db/sendemail.do",
+                url : "/db/sendemail",
                 type : "post",
                 data : { receiveMail : useremail, userid : userid },
+
                 success : function(){
-                alert(useremail+"로 임시 비밀번호 보냈습니다. ");
-                $("div.modal").fadeOut();
-                    $("body").css("overflow-y","scroll");
+	                alert(useremail+"로 임시 비밀번호 보냈습니다. ");
+	                $("div.modal").fadeOut();
+	                    $("body").css("overflow-y","scroll");
+	                },
+
+                error : function(request,status,error){
+       				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					/*alert("메일 보내기 실패");*/
                 },
-                error : function(){
-                    alert("메일 보내기 실패");
-                },
+
                 beforeSend: function(){
                     $(".loading").css("display","block");
                 },
+
                 complete:function(){
                     $(".loading").hide();
                 }

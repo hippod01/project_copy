@@ -2,6 +2,7 @@ package com.project.web;
 
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -93,11 +94,12 @@ public class AuthController {
 		
 		
 		//비밀번호 찾기 메일 보내기 처리
-		@RequestMapping(value="sendemail.do", method = RequestMethod.POST)
+		@ResponseBody
+		@RequestMapping(value="sendemail", method = RequestMethod.POST)
 	    public void sendemaildo(@ModelAttribute EmailDTO dto, Model model,MemberVO member) {
 			dto.setSubject("비밀번호 재설정");
 			dto.setSenderName("매거진B");
-			logger.info(""+member);
+			
 					
 	        try {
 	            //임시 비밀번호 설정

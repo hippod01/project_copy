@@ -45,6 +45,14 @@ aside a{
 	font-size : 14px;
 }
 
+aside p{
+	color : rgb(102,102,102);
+	padding : 0 10px;
+	/* letter-spacing: -1px; */
+	font-size : 14px;
+	display : inline-block;
+}
+
 
 /* 페이지 이름 (mypage,login,join..)*/
 
@@ -311,14 +319,14 @@ div.modal{
 	
 }
 
-div#findpw, div#findorder{
+div#findpw, div#findorder, div#viewMsg{
 	position : relative;
 	top : 50%;
 	left : 50%;
 	transform : translate(-50%, -50%);
 	display : none;
 	justify-content : center;
-	align-items : center;
+	align-items : center; 
 	max-width : 500px; 
 	min-height : 500px;
 	flex-direction :column;
@@ -326,11 +334,48 @@ div#findpw, div#findorder{
 	padding : 10px;
 }
 
+div#viewMsg{
+	/* max-height: auto; */
+	min-height: auto;
+	max-height: 500px;
+	padding : 0;
+	justify-content: flex-start;
+	overflow-y:scroll;
+	-ms-overflow-style: none;
+}
 
 
-div#findpwcont, div#findordercont{
+div#viewMsg::-webkit-scrollbar {
+    display: none;
+}
+
+
+div#findpwcont, div#findordercont{ 
 	width : 70%;
 }
+
+/* 쪽지 알림 */
+div#viewMsgCont{
+	width : 100%;
+}
+
+div#msglist{
+	/* border-top : 1px solid rgb(150,150,150); */
+	border-bottom : 1px solid rgb(150,150,150);
+	padding : 10px;
+	/* margin : 10px 0; */
+}
+
+div#msglist:hover{
+	background-color: rgba(255,255,255,0.5);
+}
+
+div#msglist p{
+	font-weight: 300;
+	font-size : 13px;	
+}
+
+
 
 div.modal p{
 	padding : 3px 0;
@@ -369,6 +414,9 @@ div#loadimgbox{
 	justify-content : center;
 	align-items : center;
 }
+
+
+
 
 
 
@@ -468,6 +516,12 @@ aside#boardmenu a{
 	font-weight: 300;
 	font-size : 13px;
 	border-radius:  20px 20px 0 0;
+}
+
+/* 쪽지보내기 버튼 */
+span.fa-envelope{
+	cursor: pointer;
+	
 }
 
 

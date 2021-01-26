@@ -51,33 +51,35 @@
 		<!-- 사용자 nav -->
 		<nav id="usernav">
 			<ul>
-	
-				<li>				
-				<!-- 검색 아이콘 -->	
-				<a href="#" class="search_icon"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/search.png"/>" alt="" /></a></li>
+				
+				<!-- 검색 아이콘 -->
+				<li><a href="#" class="search_icon"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/search.png"/>" alt="" /></a></li>
 				
 				<!-- 로그인 안했을 때 -->
 				<sec:authorize access="isAnonymous()">
-					<li><a href="<c:url value="/Customlogin"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/user2.png"/>" alt="" /></a></li>
-					<%-- <li><a href="<c:url value="/register"/>">join</a></li> --%>
+					<li><a href="<c:url value="/Customlogin"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/user2.png"/>" alt="" /></a></li>	
 				</sec:authorize>
 				
-			
 				<!-- 로그인 했을 때 -->
 				<sec:authorize access="isAuthenticated()">
+					<sec:authentication var="principal" property="principal" />
+					<!-- 쪽지 키운트 -->
+					<input type="hidden" id="login_id" value="${principal.username}" />
 					<!-- 사용자 아이콘 -->
-					<li><a href="<c:url value="/member/info"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/user2.png"/>" alt="" /></a></li>
-					<%-- <li><a href="<c:url value="/logout"/>">logout</a></li>
-					<li><a href="<c:url value="/member/info"/>">mypage</a></li> --%>
+					<li>
+						<div style="width : 30px; height : 30px">
+						<a href="<c:url value="/member/info"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/user2.png"/>" alt="" /></a>
+						<p id="MsgCheckIcon"></p>
+						</div>
+					</li>
 				</sec:authorize>
 				
 				<!-- 장바구니 아이콘 -->
 				<li><a href="<c:url value="/product/cart"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/shopping-bag.png"/>" alt="" /></a></li>
 				
+				<!-- 관리자 페이지-->
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="<c:url value="/member/adminpage?type=member"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/settings.png"/>" alt="" /></a></li>
-				
-				
+					<li><a href="<c:url value="/member/adminpage?type=member"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/settings.png"/>" alt="" /></a></li>
 				</sec:authorize>
 				
 				
@@ -140,6 +142,57 @@
 
 
 
+
+<sec:authorize access="isAuthenticated()">
+<!-- websocket 쪽지 조회 -->
+<script type="text/javascript">
+
+	var wsUri = "ws://localhost:8080/db/socket";
+	var webSocket = new WebSocket(wsUri);
+	
+	// 접속이 완료되면
+	webSocket.onopen = function(message) {
+		/* alert("Server connect..."); */
+		sendMessage();
+		/* setInterval(sendMessage,3000); */
+		
+	};
+	
+	// 접속이 끝기는 경우
+	webSocket.onclose = function(message) { };
+	
+	// 에러가 발생하면
+	webSocket.onerror = function(message) {
+		console.log("error...");
+	};
+	
+	// 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다.
+	webSocket.onmessage = function(message) {
+		/* header 배지 */
+		let MsgCheckIcon = document.getElementById("MsgCheckIcon");
+		/* meminfo */
+		let MsgIcon = document.getElementById("MsgIcon");
+		if(message.data >= 0)
+			MsgCheckIcon.innerHTML = message.data;
+			if(MsgIcon != null){
+				MsgIcon.innerHTML = message.data;
+			}
+		
+	};
+	
+	// 서버로 메시지를 발송하는 함수
+	function sendMessage() {
+		// 로그인 아이디 가져옴
+		let login_id = document.getElementById("login_id");
+		// 소켓으로 보낸다.
+		webSocket.send(login_id.value);
+	}
+	
+	
+	
+
+</script>
+</sec:authorize>
 
 </body>
 </html>

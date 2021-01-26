@@ -57,20 +57,20 @@ $(document).ready(function(){
 					repwval = $("input#checkpw").val();
 					
 					if(pwval != repwval){
+						repwcheck = false;
 						//$("font[name=check]").text("");
 						$("#repwmsg").html("<p class='checkno'>비밀번호가 일치 하지 않습니다.</p>");
-						repwcheck = false;
 					} else{
+						repwcheck = true;
 						//$("font[name=check]").text("");
 						$("#repwmsg").html("<p class='checkok'>비밀번호가 일치 합니다.</p>");
-						repwcheck = true;
 					}
 					
 				}) 
 		}else{
+			pwcheck = false;
 			$("#pwmsg").html("<p class='checkno'> 비밀번호는 최소 한 자의 영소문자+영대문자+특수문자+숫자가 포함 8자 이상이어야 합니다.</p>");
 			$("#repwmsg").html("");
-			pwcheck = false;
 		}
 			
 	}) // end 비밀번호 유효성 검사
@@ -92,7 +92,7 @@ function checkmem(){
 
 	} else{
 		
-		if(idcheck && pwcheck && ididcheck && pwpwcheck){
+		if(idcheck && pwcheck && ididcheck && repwcheck){
 			alert("회원가입 완료!");
 			return true;
 		}else{
