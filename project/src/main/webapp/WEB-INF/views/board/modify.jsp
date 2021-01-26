@@ -55,6 +55,7 @@
 						<p>첨부파일</p>
 						<input type="file" id="attachfile" name="file" multiple="multiple"/>
 						
+						<!-- 첨부파일 리스트 보여지는 곳 -->
 						<div id="uploadfileList">
 							<ul>
 							</ul>
@@ -64,6 +65,17 @@
 						<div id="uploadfileinfo">
 							
 						</div>
+						
+						<!-- 데이터베이스에 파일 정보 넘기는 input hidden 들어오는 곳 -->
+						<div id="newfileinfo">
+							
+						</div>
+						
+						<!-- 데이터베이스에 파일 정보 넘기는 input hidden 들어오는 곳 -->
+						<div id="deletefileinfo">
+							
+						</div>
+						
 					</td>
 				</tr>
 				

@@ -33,6 +33,7 @@
 		<load-on-startup>1</load-on-startup>
 		
 		<multipart-config>
+<!-- 			<location>/tomcat8/apache-tomcat-8.5.60/temp</location> -->
 			<location>/Users/db/Documents/javaProject/spring/upload</location>
 			<max-file-size>20971520</max-file-size>
 			<max-request-size>41943040</max-request-size>

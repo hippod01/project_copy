@@ -40,7 +40,8 @@
 	 <c:if test="${boardvo.btype eq 'notice'}">
 	 <h3 id="cateback">NOTICE</h3>
 	 <div id="container">
-		<form role="form" action="/db/board/write" method="post">
+			<form role="form" action="/db/board/write" method="post" >
+			<!-- <form action="/db/upload" method="post" enctype="multipart/form-data"> -->
 			<table id="noticewrite">
 				
 				<!-- 제목 -->
@@ -56,8 +57,9 @@
 				<tr>
 					<td>
 						<p>첨부파일</p>
-						<input type="file" id="attachfile" name="file" multiple="multiple"/>
-						
+						<!--로컬 <input type="file" id="attachfile" name="file" multiple="multiple"/> -->					 
+        				<input type="file" id="attachfile" name="file" multiple="multiple" > <br>
+    					
 						<div id="uploadfileList">
 							<ul>
 							</ul>

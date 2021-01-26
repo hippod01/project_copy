@@ -141,11 +141,11 @@ $(document).ready(function(){
 		$(attach).each(function(i,attach){
 			let fileCallPath = attach.uploadpath+"/"+attach.uuid+"_"+attach.filename;
 			if(attach.filetype){
-				let fileCallPaths = attach.uploadpath+"/s_"+attach.uuid+"_"+attach.filename;
-				str+= "<li><a href='/db/display?filename="+fileCallPath+"'><img src='/db/display?filename="+fileCallPaths+"'/></a> "+
-				"<a href='/db/download?filename="+fileCallPath+"'>"+attach.filename+"</a></li>"	
+				str+= "<li><a href='"+fileCallPath+"' target='_blank'><img src='"+fileCallPath+"'/></a> "+
+					"<a href='/db/awsFileDownload?filename="+attach.filename+"&fileuuid="+attach.uuid+"'>"+attach.filename+"</a></li>"	
 			} else{
-				str+= "<li><span class='far fa-file'/><a href='/db/download?filename="+fileCallPath+"'>"+attach.filename+"</a></li>"
+				str+= "<li><span class='far fa-file'/>"
+					+"<a href='/db/awsFileDownload?filename="+attach.filename+"&fileuuid="+attach.uuid+"'>"+attach.filename+"</a></li>"
 				
 			}
 		})

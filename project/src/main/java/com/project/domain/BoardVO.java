@@ -17,6 +17,9 @@ public class BoardVO {
 //	첨부파일
 	private List<AttachFileDTO> attachlist;
 	
+//	첨부파일
+	private List<AttachFileDTO> deletelist;
+	
 //	리뷰, 문의 게시판 전체 보기 상품 정보 추가
 	private String pname;
 	private String pimgname;
@@ -86,6 +89,14 @@ public class BoardVO {
 		this.attachlist = attachlist;
 	}
 	
+	
+	
+	public List<AttachFileDTO> getDeletelist() {
+		return deletelist;
+	}
+	public void setDeletelist(List<AttachFileDTO> deletelist) {
+		this.deletelist = deletelist;
+	}
 	//리뷰, 문의 게시판 관련
 	public String getPname() {
 		return pname;
@@ -99,12 +110,17 @@ public class BoardVO {
 	public void setPimgname(String pimgname) {
 		this.pimgname = pimgname;
 	}
+	
 	@Override
 	public String toString() {
 		return "BoardVO [btype=" + btype + ", bno=" + bno + ", title=" + title + ", content=" + content + ", writer="
 				+ writer + ", regdate=" + regdate + ", updatedate=" + updatedate + ", viewcnt=" + viewcnt + ", pno="
-				+ pno + ", attachlist=" + attachlist + ", pname=" + pname + ", pimgname=" + pimgname + "]";
+				+ pno + ", attachlist=" + attachlist + ", deletelist=" + deletelist + ", pname=" + pname + ", pimgname="
+				+ pimgname + "]";
 	}
+	
+	
+	
 	
 	
 	

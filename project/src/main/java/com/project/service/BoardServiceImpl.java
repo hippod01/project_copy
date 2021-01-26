@@ -58,6 +58,8 @@ public class BoardServiceImpl implements BoardService {
 	public void boardupdate(BoardVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		mapper.boardupdate(vo);
+		BoardVO board = mapper.boardread(vo);
+		board.getAttachlist();
 		if(vo.getAttachlist() != null) {
 			vo.getAttachlist().forEach(attach->{
 				attach.setBno(vo.getBno());
@@ -66,6 +68,17 @@ public class BoardServiceImpl implements BoardService {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			});
+		}
+		if(vo.getDeletelist() != null) {
+			vo.getDeletelist().forEach(delete->{
+				try {
+					filemapper.deleteattach(delete.getUuid());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			});
 		}
 	}

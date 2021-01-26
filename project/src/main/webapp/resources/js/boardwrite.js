@@ -140,11 +140,11 @@ $(document).ready(function(){
 				return false;
 			}
 			/*컨트롤러에서 Multipartfile로 받는 이름과 같아야 한다*/
-			formData.append("uploadfile",files[i]);
+			formData.append("boardFile",files[i]);
 		}
 		
 		$.ajax({
-			url : '/db/uploadfile',
+			url : '/db/upload',
 			processData : false,
 			contentType : false,
 			data : formData,
@@ -164,17 +164,17 @@ $(document).ready(function(){
 		
 		$(filelist).each(function(i,obj){
 			let fileCallPath = obj.uploadpath+"/"+obj.uuid+"_"+obj.filename;
-			
+			console.log(fileCallPath);
 			/*이미지 파일이 아니라면*/
 			if(!obj.filetype){
 				str += "<li data-filename='"+obj.filename+"' data-uuid='"+obj.uuid+"' data-uploadpath ='"+obj.uploadpath+"' data-filetype='"+obj.filetype+"'>"
-					+ "<span class='far fa-file'></span><a href='/db/download?filename="+fileCallPath+"'>"+filelist[i].filename+"</a><span class='fas fa-times deleteicon' data-file='"+fileCallPath+"' data-type='notimage'></span></li>";		
+					+ "<span class='far fa-file'></span>"
+					+ "<a href='/db/awsFileDownload?filename="+obj.filename+"&fileuuid="+obj.uuid+"'>"+filelist[i].filename+"</a><span class='fas fa-times deleteicon' data-file='"+obj.filename+"' data-type='notimage' data-uuid='"+obj.uuid+"'></span></li>";		
 			} else{
 			//이미지 파일이라면
-				let fileCallPaths = obj.uploadpath+"/s_"+obj.uuid+"_"+obj.filename;
-				console.log(fileCallPath);
 			 	str += "<li data-filename='"+obj.filename+"' data-uuid='"+obj.uuid+"' data-uploadpath ='"+obj.uploadpath+"' data-filetype='"+obj.filetype+"'>"
-					+"<a href='/db/display?filename="+fileCallPath+"'><img src='/db/display?filename="+fileCallPaths+"'/></a><a href='/db/download?filename="+fileCallPath+"'>"+filelist[i].filename+"</a><span class='fas fa-times deleteicon' data-file='"+fileCallPaths+"' data-type='image'></span></li>";	
+					+"<a href='"+fileCallPath+"' target='_blank'><img src='"+fileCallPath+"'/></a> "
+					+"<a href='/db/awsFileDownload?filename="+obj.filename+"&fileuuid="+obj.uuid+"'>"+filelist[i].filename+"</a><span class='fas fa-times deleteicon' data-file='"+obj.filename+"' data-type='image' data-uuid='"+obj.uuid+"'></span></li>";	
 			}
 		})		
 		$("#uploadfileList ul").append(str);
@@ -184,12 +184,13 @@ $(document).ready(function(){
 	$("div#uploadfileList").on("click","span.deleteicon",function(e){
 		let filename =$(this).data("file");
 		let filetype =$(this).data("type");
-		
+		let fileuuid =$(this).data("uuid");
+
 		let removeli = $(this).closest("li");
 		
 		$.ajax({
-			url : "/db/deletefile",
-			data : {filename : filename, filetype : filetype},
+			url : "/db/awsFileDelete",
+			data : {filename : filename, filetype : filetype, fileuuid : fileuuid},
 			dataType : "text",
 			type : "POST",
 			success:function(data){

@@ -57,7 +57,8 @@
 	
 	<!-- 파일 업로드 위치 -->
 	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="/Users/db/Documents/javaProject/spring/upload"></beans:constructor-arg>
+		<!-- <beans:constructor-arg value="/Users/db/Documents/javaProject/spring/upload"></beans:constructor-arg> -->
+		<beans:constructor-arg value="/tomcat8/apache-tomcat-8.5.60/temp"></beans:constructor-arg>
 	
 	</beans:bean>
 	

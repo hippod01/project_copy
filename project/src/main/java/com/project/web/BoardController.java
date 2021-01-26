@@ -59,10 +59,10 @@ public class BoardController {
 		pvo.setPno(vo.getPno());
 		
 		if(vo.getPno() == 0) {
-			logger.info("pno 없음");
+//			logger.info("pno 없음");
 			model.addAttribute("boardvo", vo);
 		} else {
-			logger.info("pno 있음");
+//			logger.info("pno 있음");
 			model.addAttribute("boardvo", vo);
 			model.addAttribute("productvo", pservice.productview(pvo));
 		}
@@ -75,11 +75,14 @@ public class BoardController {
 	public String boardwritepost(BoardVO vo,OrderVO order,Principal principal) throws Exception{
 		
 		vo.setWriter(principal.getName());
-		service.boardcreate(vo);
+		
 		if(vo.getBtype().equals("review")) {
 			service.reviewchkupdate(order);
 		}
-		
+		if(vo.getBtype().equals("notice")) {
+			vo.setContent(vo.getContent().replace("\r\n", "<br>"));
+		}
+		service.boardcreate(vo);
 		return "redirect:/board?btype="+vo.getBtype();
 		
 	}
@@ -100,18 +103,25 @@ public class BoardController {
 //	게시글 수정화면 (pno)
 	@RequestMapping(value="board/modify", method = RequestMethod.GET)
 	public void modifyget(BoardVO vo,Model model,Principal principal) throws Exception{
-		
-		model.addAttribute("boardvo", service.boardread(vo));
+		BoardVO board = service.boardread(vo);
+		if(vo.getBtype().equals("notice")) {
+			board.setContent(board.getContent().replace("<br>", "\r\n"));
+		}
+		model.addAttribute("boardvo", board);
 		if(principal != null) {
 			model.addAttribute("loginuser", principal.getName());
 		}
+		
 		
 	}
 	
 //	게시글 수정처리 
 	@RequestMapping(value="board/modify", method = RequestMethod.POST)
 	public String modifypost(BoardVO vo) throws Exception{
-		
+		logger.info("수정 처리"+vo);
+		if(vo.getBtype().equals("notice")) {
+			vo.setContent(vo.getContent().replace("\r\n", "<br>"));
+		}
 		service.boardupdate(vo);
 		return "redirect:/board/read?bno="+vo.getBno()+"&btype="+vo.getBtype();
 		
