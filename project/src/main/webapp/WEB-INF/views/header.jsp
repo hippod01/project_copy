@@ -147,14 +147,13 @@
 <!-- websocket 쪽지 조회 -->
 <script type="text/javascript">
 
-	var wsUri = "ws://localhost:8080/db/socket";
+	var wsUri = "wss://7rojd6r5o4.execute-api.ap-northeast-2.amazonaws.com/production/";
 	var webSocket = new WebSocket(wsUri);
 	
 	// 접속이 완료되면
 	webSocket.onopen = function(message) {
 		/* alert("Server connect..."); */
 		sendMessage();
-		/* setInterval(sendMessage,3000); */
 		
 	};
 	
@@ -166,17 +165,26 @@
 		console.log("error...");
 	};
 	
+	/* header 배지 */
+	let MsgCheckIcon = document.getElementById("MsgCheckIcon");
+	
+	
+	
+	
 	// 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다.
 	webSocket.onmessage = function(message) {
-		/* header 배지 */
-		let MsgCheckIcon = document.getElementById("MsgCheckIcon");
+		
+		var data = JSON.parse(message.data);
+		
 		/* meminfo */
 		let MsgIcon = document.getElementById("MsgIcon");
-		if(message.data >= 0)
-			MsgCheckIcon.innerHTML = message.data;
-			if(MsgIcon != null){
-				MsgIcon.innerHTML = message.data;
-			}
+			
+			
+		if(data.msgcnt >= 0){
+			MsgCheckIcon.innerHTML = data.msgcnt;
+			MsgIcon.innerHTML = data.msgcnt;
+		} 
+			
 		
 	};
 	
@@ -185,7 +193,9 @@
 		// 로그인 아이디 가져옴
 		let login_id = document.getElementById("login_id");
 		// 소켓으로 보낸다.
-		webSocket.send(login_id.value);
+		const payload = {"message" : "sendMessage", "login_ig" : login_id.value};
+		webSocket.send(JSON.stringify(payload));
+		//webSocket.send(login_id.value);
 	}
 	
 	
