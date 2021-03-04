@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!DOCTYPE html>
@@ -63,13 +64,21 @@
 				<!-- 로그인 했을 때 -->
 				<sec:authorize access="isAuthenticated()">
 					<sec:authentication var="principal" property="principal" />
-					<!-- 쪽지 키운트 -->
-					<input type="hidden" id="login_id" value="${principal.username}" />
+					
+						<!-- OAuth2 로그인 안보임 -->
+						<c:if test="${!fn:contains(principal,'@')}">
+							<!-- 쪽지 키운트 -->
+							 <input type="hidden" id="login_id" value="${principal.username}" />
+						</c:if>
+						
 					<!-- 사용자 아이콘 -->
 					<li>
 						<div style="width : 30px; height : 30px">
 						<a href="<c:url value="/member/info"/>"><img style="width : 30px; height : 30px;" src="<c:url value="/resources/image/icon/user2.png"/>" alt="" /></a>
-						<p id="MsgCheckIcon"></p>
+						<!-- OAuth2 로그인 안보임 -->
+						<c:if test="${!fn:contains(principal,'@')}">
+							<p id="MsgCheckIcon"></p>
+						</c:if>
 						</div>
 					</li>
 				</sec:authorize>
@@ -178,7 +187,7 @@
 		
 		/* meminfo */
 		let MsgIcon = document.getElementById("MsgIcon");
-			
+		console.log(data);	
 			
 		if(data.msgcnt >= 0){
 			MsgCheckIcon.innerHTML = data.msgcnt;
@@ -193,9 +202,9 @@
 		// 로그인 아이디 가져옴
 		let login_id = document.getElementById("login_id");
 		// 소켓으로 보낸다.
-		const payload = {"message" : "sendMessage", "login_ig" : login_id.value};
+		const payload = {"message" : "sendMessage", "login_id" : login_id.value};
 		webSocket.send(JSON.stringify(payload));
-		//webSocket.send(login_id.value);
+		
 	}
 	
 	

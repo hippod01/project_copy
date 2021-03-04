@@ -59,7 +59,11 @@
 		<a href="/db/member/adminpage?type=member">관리자</a>
 		</sec:authorize>
 		<!-- <a href="#">쪽지 <i class="far fa-envelope"></i> (<span id="MsgIcon"></span>)</a> -->
+		<!-- OAuth2 로그인 안보임 -->
+		<sec:authentication var="principal" property="principal" />
+		<c:if test="${!fn:contains(principal,'@')}">
 		<p id="msgViewLink" style="font-size : 14px; ">쪽지 <i class="far fa-envelope"></i> (<span id="MsgIcon"></span>)</p>
+		</c:if>
 	</aside>
 	
 	<table id="memberinfo">
