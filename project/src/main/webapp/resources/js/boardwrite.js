@@ -139,7 +139,7 @@ $(document).ready(function(){
 			if(!checkfile(files[i].size, files[i].name)){
 				return false;
 			}
-			/*컨트롤러에서 Multipartfile로 받는 이름과 같아야 한다*/
+			/*컨트롤러에서 Multipartfile로 받는 변수 이름과 같아야 한다 : Multipartfile boardFile*/
 			formData.append("boardFile",files[i]);
 		}
 		
@@ -154,7 +154,7 @@ $(document).ready(function(){
 				console.log(result);
 				attachfilelist(result);
 			}
-		}) //end ajax
+		}) 
 	}) // end 파일 첨부 했을 때
 	
 	

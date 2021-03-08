@@ -57,7 +57,7 @@
 				<tr>
 					<td>
 						<p>첨부파일</p>
-						<!--로컬 <input type="file" id="attachfile" name="file" multiple="multiple"/> -->					 
+																 
         				<input type="file" id="attachfile" name="file" multiple="multiple" > <br>
     					
 						<div id="uploadfileList">

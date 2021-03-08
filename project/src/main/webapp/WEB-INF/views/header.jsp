@@ -178,16 +178,14 @@
 	let MsgCheckIcon = document.getElementById("MsgCheckIcon");
 	
 	
-	
-	
-	// 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다.
+	// 서버로부터 메시지가 도착할 때.
 	webSocket.onmessage = function(message) {
 		
 		var data = JSON.parse(message.data);
 		
 		/* meminfo */
 		let MsgIcon = document.getElementById("MsgIcon");
-		console.log(data);	
+		//console.log(data);	
 			
 		if(data.msgcnt >= 0){
 			MsgCheckIcon.innerHTML = data.msgcnt;
@@ -201,6 +199,7 @@
 	function sendMessage() {
 		// 로그인 아이디 가져옴
 		let login_id = document.getElementById("login_id");
+				
 		// 소켓으로 보낸다.
 		const payload = {"message" : "sendMessage", "login_id" : login_id.value};
 		webSocket.send(JSON.stringify(payload));

@@ -46,15 +46,16 @@ public class awsS3uploadController {
 	private awsS3service awsS3Service;
 	
 	//ckeditor 드래그 업로드
-	@RequestMapping(value = "image/drag", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @RequestMapping(value = "image/drag", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object dragFileUpload(@RequestParam("upload") MultipartFile dragfile) {
+		List<AttachFileDTO> dtolist = new ArrayList();
+		HashMap<String, Object> map = new HashMap<>();
 		String foldername = "ckeditor";
-        HashMap<String, Object> map = new HashMap<>();
         try {
-        	awsS3Service.upload(dragfile,foldername);
+        	dtolist = awsS3Service.upload(dragfile,foldername);
             map.put("uploaded", 1);
-            map.put("url", url+foldername+"/"+dragfile.getOriginalFilename());
+            map.put("url", url+foldername+"/"+dtolist.get(0).getUuid()+"_"+dragfile.getOriginalFilename());
             map.put("fileName", dragfile.getOriginalFilename());
 
             return map;
@@ -66,32 +67,47 @@ public class awsS3uploadController {
     }    
     
 	//ckeditor 업로드
-	@RequestMapping(value = "image",produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
+	@RequestMapping(value = "image",produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Object handleFileUpload(@RequestParam("upload") MultipartFile uploadfile) throws Exception {
-
+		List<AttachFileDTO> dtolist = new ArrayList();
 		HashMap<String, Object> map = new HashMap<>();
 		String foldername = "ckeditor";
 		
 		try {
-			awsS3Service.upload(uploadfile,foldername);
+			dtolist = awsS3Service.upload(uploadfile,foldername);
 			map.put("uploaded", 1);
-            map.put("url", url+foldername+"/"+uploadfile.getOriginalFilename());
+            map.put("url", url+foldername+"/"+dtolist.get(0).getUuid()+"_"+uploadfile.getOriginalFilename());
             map.put("fileName", uploadfile.getOriginalFilename());
 
             return map;
 	        
 		} catch (Exception e) {
-			e.printStackTrace();
+			map.put("uploaded", 0);
+            map.put("error", "{'message': '" + e.getMessage() + "'}");
+            return map;
 		}
-
-		return null;
 		
     }
 	
 //	input file type upload
+//    @RequestMapping(value = "upload", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity<List<AttachFileDTO>> execWrite(MultipartFile boardFile, HttpServletResponse response) throws Exception {
+//
+//    	String foldername = "upload";
+//    	List<AttachFileDTO> dtolist = new ArrayList();
+//    	
+//    	try {
+//    		dtolist = awsS3Service.upload(boardFile, foldername);	
+//		} catch (Exception e) {
+//				e.printStackTrace();
+//		} 
+//    	return new ResponseEntity<List<AttachFileDTO>>(dtolist, HttpStatus.OK); 
+//    }
+    
+	//input file type upload 다중 파일 업로드
     @RequestMapping(value = "upload", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<AttachFileDTO>> execWrite(MultipartFile boardFile, HttpServletResponse response) throws Exception {
+    public ResponseEntity<List<AttachFileDTO>> execWrite(MultipartFile[] boardFile) throws Exception {
 
     	String foldername = "upload";
     	List<AttachFileDTO> dtolist = new ArrayList();

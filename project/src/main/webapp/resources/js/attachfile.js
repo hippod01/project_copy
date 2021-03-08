@@ -53,13 +53,11 @@ $(document).ready(function(){
 			type : 'POST',
 			dataType : 'json',
 			success:function(result){
-				console.log(result);
+				//console.log(result);
 				attachfilelist(result);
 			} 
 			
 		}) //end ajax
-		
-		
 	})
 
     /*파일 사이즈, 확장자 체크*/	
